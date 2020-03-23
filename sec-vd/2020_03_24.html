@@ -22,7 +22,6 @@
     # 모듈  
     - Portable Terraform configurations (packages)
     - Allow separation of concerns and responsibilities among teams
-    - Modules are just Terraform configurations inside a folder - there's nothing special about them.
      
       ```bash
       > tree my-module 
@@ -43,9 +42,25 @@
       }
       ```
     ---
-    # 슬라이드 제목2
-    두번째 슬라이드입니다.
-
+    # 모듈 사용
+     ```json
+      > cat my-module.tf
+      module "my-module" {
+        # Source can be any URL or file path 
+        source = "../../my-module"
+        ami = "ami-0e63f50857fdc1f9f"
+        instance_type = "m5.large" 
+      }
+      
+      output "db-address" {
+        value = module.my-module.address
+      }
+      ```
+      - Variables defined in a module become arguments to module block
+      - Outputs defined in module become attributes from module definition
+      - Configuration inside a module is a "black box" from the outside
+      - Individual resources are not accessible outside the module
+      
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
